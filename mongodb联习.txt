@@ -1,0 +1,24 @@
+  {"name":"张三",age:2,weight：120，sex:1}
+  {"name":"李四",age:22,weight：200，sex:-1,hobby:[{"name":"game",code:1},{"name":"study",code:3}]}
+  {"name":"王五",age:2,weight：80，sex:1}
+  {"name":"麻子",age:92,weight：130，sex:0,address:"China"}
+  {"name":"六六",age:"200",weight：50，sex:2,score:100}
+
+
+找到 成年人
+
+找到有兴趣爱好的人 //只是从菜鸟教程有这个  
+
+找到分数为100  或者 体重大于120的人
+
+找到中国人
+
+安照体重排序从高到底   取前两条数据  
+
+
+
+
+
+
+
+

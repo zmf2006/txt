@@ -1,0 +1,26 @@
+1 什么是feign  （接口调用    面向接口  声明式调用就像调用本地方法一样调用远程方法）
+
+环境搭建
+
+导入 pom
+
+   <!-- 引入feign   封装了ribbon+ restTemplate    hystrix-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+启动类 
+
+@EnableFeignClients//声明fegin
+
+
+
+定义接口（和远程服务作对应）
+
+//声明这是feign  value 服务提供者的服务名  fallback=接口的实现类的类对象    实现方法是熔断处理
+@FeignClient(value = "productapi",fallback =ProductExcetion.class )
+public interface ProductApi {
+    @RequestMapping("product/queryProduct")
+    public String productApi();
+}

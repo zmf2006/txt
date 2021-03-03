@@ -1,0 +1,91 @@
+1 什么是hystrix？  熔断器（）
+
+2 环境搭建
+
+导入pom
+
+<!-- hystrix 熔断器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+相关配置
+
+启动类   加两个注解
+
+@EnableHystrix// 熔断器  需要两个注解
+@EnableCircuitBreaker
+
+
+对你要熔断的方法
+
+ // 此注解标识是要熔断    fallbackMethod 熔断后进行执行的方法
+    @HystrixCommand(fallbackMethod = "errorMethod",commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "3000")
+    }) //对此方法进行熔断
+
+
+
+
+
+
+hystrix的监控平台    cs架构
+
+搭建 服务端
+
+  <!-- hystrix dashboard  监控平台的启动器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+        </dependency>
+
+
+启动类
+
+@EnableHystrixDashboard
+
+
+访问 根目录  /hystrix
+
+
+搭建客户端   （使用了熔断的微服务）
+
+
+加入pom
+
+ <!-- 将此服务加入hystrix bashboard 监控平台 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
+提供访问的监控路径
+
+启动类中
+
+/*  提供监控平台的路径*/
+    @Bean
+    public ServletRegistrationBean getServlet() {
+        HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
+        registrationBean.setLoadOnStartup(1);
+        registrationBean.addUrlMappings("/hystrix.stream");
+        registrationBean.setName("HystrixMetricsStreamServlet");
+        return registrationBean;
+    }
+
+
+
+
+
+
+
+
+
+

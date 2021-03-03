@@ -1,0 +1,57 @@
+
+讲了服务的注册和发现。在微服务架构中，业务都会被拆分成一个独立的服务，服务与服务的通讯是基于http restful的。
+
+1 什么是ribbon？
+
+Spring cloud有两种服务调用方式，
+
+一种是ribbon+restTemplate（spring提供的对httpclien进行封装），
+
+另一种是feign。Feign默认集成了ribbon。
+
+在这一篇文章首先讲解下基于ribbon+rest。
+
+ribbon是一个负载均衡客户端（了解什么叫负载均衡），可以很好的控制http和tcp的一些行为。
+
+框架搭建  
+
+引入ribbon的启动器  需要eureka的依赖
+
+   <!-- eureka Client 启动器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+
+
+配置文件中注意  提供的服务名称 不能有下划线（_）
+
+
+启动类上 注解   @EnableDiscoveryClient （ eurekaclient  声明是注册中心的客户端）
+
+启动类中注入bean  
+
+@Bean
+    @LoadBalanced //声明 ribbon （并对resttemmplate进行负载均衡   调用的时候直接写服务名就行  不用写ip和端口）
+    RestTemplate restTemplate() {
+        return new RestTemplate();// RestTemplate对httpclient发送请求 进行封装了
+    }
+
+调用的地方 注入resttemplate 
+
+get请求    getforobject
+
+ 
+ //调用client1服务  （现在有两台服务）  //重点注意  微服务的名称不能有_(下划线)  服务调不通（我找了好久）
+        String rs = restTemplate.getForObject("http://EUREKA-CLIENT1/client1/test",String.class);//发送get请求
+
+post请求  postforobject
+
+
+
+
+

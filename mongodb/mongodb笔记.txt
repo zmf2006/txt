@@ -1,0 +1,102 @@
+1  mongodb简介
+
+   mongodb是一个 非关系型数据库      （ redis  memcahe） （缓存   快 ）
+
+专业的说法 
+
+MongoDB 是一个基于分布式文件存储的数据库。由 C++ 语言编写。旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。
+
+MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。
+
+
+
+MongoDB 是一个面向文档存储的数据库，操作起来比较简单和容易。
+你可以在MongoDB记录中设置任何属性的索引 (如：FirstName="Sameer",Address="8 Gandhi Road")来实现更快的排序。
+你可以通过本地或者网络创建数据镜像，这使得MongoDB有更强的扩展性。
+如果负载的增加（需要更多的存储空间和更强的处理能力） ，它可以分布在计算机网络中的其他节点上这就是所谓的分片。
+
+MongoDB支持各种编程语言:RUBY，PYTHON，JAVA，C++，PHP，C#等多种语言。
+MongoDB安装简单。
+
+
+2 环境搭建
+
+   以window平台为准   
+
+  启动服务      mongod.exe
+
+  连接     mongo.exe
+
+
+
+3 语法
+
+专业术语      database （数据库）  collection （集合 或者表）   document（文档 json）   
+
+
+操作数据的命令
+
+数据库相关操作
+
+show dbs（查看所有数据库（有数据的数据库））
+
+use（创建或者切换数据库）
+
+db（查看当前数据库）
+
+集合的相关操作
+
+db.createCollection()  创建集合
+
+db.集合名称.drop() 删除集合
+
+show collections( tables) 查看所有集合
+
+db.集合名.insert(文档)  集合添加数据    save   insertone   insermany
+
+
+文档的操作
+
+db.集合名.insert(文档)  集合添加数据    save   insertone   insermany
+
+db.集合名.remove
+db.集合名.update
+db.集合名.find()
+
+
+springboot 如何融入mongodb 
+
+
+融入启动器
+
+pom中引入
+
+  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+
+
+配置文件配置   application.properties
+
+#mongodb配置
+spring.data.mongodb.uri=mongodb://192.168.111.132:27017/数据库
+
+
+声明javabean 和集合的对应关系
+
+@document(集合名)
+
+
+只需要在需要操作mongodb数据的时候  注入 MongoTemplate
+
+
+
+
+   
+https://blog.csdn.net/zhangcongyi420/article/details/91406843
+
+用户的日志记录给做了  （mongodb）
+
+
+
